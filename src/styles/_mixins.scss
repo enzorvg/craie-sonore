@@ -18,6 +18,6 @@
   height: $size;
   margin-top: math.div($size, -2);
   border-radius: 50%;
-  background: var(--color-ink);
+  background: t.$page;
   border: 1px solid t.$line;
 }

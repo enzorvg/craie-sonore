@@ -1,0 +1,156 @@
+// PassCard : un billet sélectionnable (bouton radio stylé).
+// SASS apporte ici : les partials chargés avec @use, un mixin (encoches, focus),
+// des calculs (espacements, taille des encoches) et une boucle @each (une variante par formule).
+@use '../../styles/tokens' as t;
+@use '../../styles/mixins' as m;
+
+.card {
+  --tone: #{t.$line-strong}; // couleur de la formule, remplacée par la variante
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: t.$space * 3;
+  height: 100%;
+  padding: t.$space * 5 t.$space * 6;
+  border: 2px solid t.$line;
+  border-radius: t.$radius;
+  background: t.$surface;
+  color: t.$text;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+
+  // Les deux encoches rondes du billet
+  &::before {
+    @include m.notch(left);
+  }
+  &::after {
+    @include m.notch(right);
+  }
+
+  &:hover {
+    border-color: t.$line-strong;
+  }
+
+  // Sélectionné : la bordure prend la couleur de la formule
+  &:has(.input:checked) {
+    border-color: var(--tone);
+    background: t.$surface-raised;
+  }
+
+  // Le vrai bouton radio est invisible : le focus clavier se voit sur la carte entière
+  &:has(.input:focus-visible) {
+    @include m.focus-ring;
+  }
+
+  &:has(.input:disabled) {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+// Boucle : .jour, .festival, .caves, chacune avec sa couleur
+@each $name, $color in t.$pass-tones {
+  .#{$name} {
+    --tone: #{$color};
+  }
+}
+
+// Bouton radio visuellement masqué mais toujours focusable et lu par les lecteurs d'écran
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: t.$space * 2;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--tone);
+}
+
+.unit {
+  margin-left: t.$space;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: t.$muted;
+}
+
+// Pastille cochée : un cercle vide qui se remplit à la sélection
+.check {
+  $size: 1.5rem;
+
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: $size;
+  height: $size;
+  border: 2px solid t.$line-strong;
+  border-radius: 50%;
+
+  &::after {
+    content: '';
+    width: $size * 0.5;
+    height: $size * 0.5;
+    border-radius: 50%;
+    background: var(--tone);
+    transform: scale(0);
+    transition: transform 0.15s;
+  }
+
+  .card:has(.input:checked) & {
+    border-color: var(--tone);
+
+    &::after {
+      transform: scale(1);
+    }
+  }
+}
+
+.highlight {
+  align-self: flex-start;
+  padding: t.$space * 0.5 t.$space * 2.5;
+  border-radius: 999px;
+  background: var(--tone);
+  color: t.$page;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+// Ligne pointillée de la perforation, à la hauteur des encoches
+.perks {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space * 1.5;
+  margin: 0;
+  padding: t.$space * 3 0 0;
+  border-top: 2px dashed t.$line-strong;
+  list-style: none;
+  font-size: 0.875rem;
+  color: t.$muted;
+
+  li::before {
+    content: '✓';
+    margin-right: t.$space * 2;
+    color: var(--tone);
+    font-weight: 700;
+  }
+}

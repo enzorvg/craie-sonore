@@ -9,6 +9,7 @@ $surface-raised: var(--color-surface-raised);
 $text: var(--color-craie);
 $muted: var(--color-muted);
 $focus: var(--color-bulle-300);
+$page: var(--color-ink);
 
 // Une couleur par formule de pass : la boucle @each du PassCard génère une variante par entrée
 $pass-tones: (
