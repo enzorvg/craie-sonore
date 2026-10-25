@@ -17,13 +17,13 @@ export const SORTS = [
   { value: 'name', label: 'Par artiste (A → Z)' },
 ]
 
-// Genre → couleurs (tokens --color-genre-*)
+// Genre → nuance de bleu ou de crème (tokens --color-genre-*), et la couleur de texte lisible dessus
 export const GENRE_STYLES = {
-  Électro: { dot: 'bg-genre-electro', text: 'text-genre-electro', bar: 'bg-genre-electro' },
-  Rock: { dot: 'bg-genre-rock', text: 'text-genre-rock', bar: 'bg-genre-rock' },
-  'Hip-hop': { dot: 'bg-genre-hiphop', text: 'text-genre-hiphop', bar: 'bg-genre-hiphop' },
-  Pop: { dot: 'bg-genre-pop', text: 'text-genre-pop', bar: 'bg-genre-pop' },
-  Jazz: { dot: 'bg-genre-jazz', text: 'text-genre-jazz', bar: 'bg-genre-jazz' },
+  Électro: { bg: 'bg-genre-electro', text: 'text-ink' },
+  Rock: { bg: 'bg-genre-rock', text: 'text-creme' },
+  'Hip-hop': { bg: 'bg-genre-hiphop', text: 'text-card' },
+  Pop: { bg: 'bg-genre-pop', text: 'text-ink' },
+  Jazz: { bg: 'bg-genre-jazz', text: 'text-ink' },
 }
 
 // Les 3 formules de pass. tone : clé de la variante SASS du PassCard ($pass-tones)
@@ -34,7 +34,7 @@ export const PASSES = [
     name: 'Pass 1 jour',
     price: 39,
     needsDay: true,
-    perks: ['Un jour au choix', 'Grande Scène et Kiosque', 'Caves selon les places'],
+    perks: ['Un jour au choix', 'Scène Bleue et Chapiteau', 'Caves selon les places'],
   },
   {
     id: 'festival',
@@ -49,7 +49,7 @@ export const PASSES = [
     tone: 'caves',
     name: 'Pass Caves',
     price: 49,
-    perks: ['Les 3 soirées des Caves', '80 places par soir', 'Visite guidée des crayères'],
+    perks: ['Les 3 concerts des Caves', '80 places par soir', 'Une coupe offerte au bar des Caves'],
   },
 ]
 

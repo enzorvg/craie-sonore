@@ -16,7 +16,7 @@ export default function App() {
   const view = useHashView(VIEWS)
   // Le planning est ici, dans le plus haut composant qui en a besoin :
   // ProgrammePage l'alimente, PlanningPage l'affiche, le header compte ses concerts
-  const [planning, togglePlanning] = useStoredSet('craie-sonore-planning')
+  const [planning, togglePlanning] = useStoredSet('cabaret-bleu-planning')
   const isFirstRender = useRef(true)
 
   // Changement d'écran : retour en haut et focus sur le titre (annoncé par les lecteurs d'écran)
@@ -31,11 +31,11 @@ export default function App() {
 
   return (
     <>
-      <a href="#contenu" className="focus-ring sr-only rounded-lg bg-bulle-400 px-4 py-3 font-bold text-ink focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50">
+      <a href="#contenu" className="focus-ring sr-only border-3 border-ink bg-creme px-4 py-3 font-extrabold text-ink focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50">
         Aller au contenu
       </a>
       <AppHeader view={view} planningCount={planning.size} />
-      <main id="contenu" className="pb-8">
+      <main id="contenu">
         {view === 'accueil' && <HomePage concerts={concerts} />}
         {view === 'programmation' && <ProgrammePage concerts={concerts} planning={planning} onTogglePlanning={togglePlanning} />}
         {view === 'planning' && <PlanningPage concerts={concerts} planning={planning} onTogglePlanning={togglePlanning} />}
