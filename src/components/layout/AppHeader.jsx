@@ -35,9 +35,12 @@ export default function AppHeader({ view, planningCount }) {
           </ul>
         </nav>
 
-        <BaseButton href="#billetterie" size="sm" variant="secondary" className="hidden md:inline-flex" aria-current={view === 'billetterie' ? 'page' : undefined}>
-          Billetterie
-        </BaseButton>
+        {/* Conteneur : hidden ne doit pas entrer en conflit avec le inline-flex du bouton */}
+        <div className="hidden md:block">
+          <BaseButton href="#billetterie" size="sm" variant="secondary" aria-current={view === 'billetterie' ? 'page' : undefined}>
+            Billetterie
+          </BaseButton>
+        </div>
       </div>
     </header>
   )

@@ -6,15 +6,18 @@ export default {
   title: 'Billetterie/PassCard (SASS)',
   component: PassCard,
   args: { pass: PASSES[0], checked: false, onChange: () => {} },
-  decorators: [(Story) => <div className="max-w-xs px-4"><Story /></div>],
 }
 
-export const Unchecked = { name: 'Non sélectionné' }
-export const Checked = { name: 'Sélectionné', args: { checked: true } }
-export const Highlighted = { name: 'Mise en avant', args: { pass: PASSES[1], checked: true } }
-export const Caves = { args: { pass: PASSES[2], checked: true } }
-export const Disabled = { name: 'Désactivé (complet)', args: { pass: PASSES[2], disabled: true } }
+// Une carte seule : largeur d'une colonne du formulaire
+const narrow = [(Story) => <div className="max-w-xs px-4"><Story /></div>]
+
+export const Unchecked = { decorators: narrow, name: 'Non sélectionné' }
+export const Checked = { decorators: narrow, name: 'Sélectionné', args: { checked: true } }
+export const Highlighted = { decorators: narrow, name: 'Mise en avant', args: { pass: PASSES[1], checked: true } }
+export const Caves = { decorators: narrow, args: { pass: PASSES[2], checked: true } }
+export const Disabled = { decorators: narrow, name: 'Désactivé (complet)', args: { pass: PASSES[2], disabled: true } }
 export const Focus = {
+  decorators: narrow,
   play: async ({ canvasElement }) => {
     canvasElement.querySelector('input').focus()
   },
