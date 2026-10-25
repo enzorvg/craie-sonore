@@ -1,28 +1,29 @@
 // PassCard : un billet sélectionnable (bouton radio stylé).
-// SASS apporte ici : les partials chargés avec @use, un mixin (encoches, focus),
-// des calculs (espacements, taille des encoches) et une boucle @each (une variante par formule).
+// SASS apporte ici : les partials chargés avec @use, des mixins (encoches, ombre, focus),
+// des calculs (espacements, taille des encoches) et une boucle @each sur une map de maps.
+@use 'sass:map';
 @use '../../styles/tokens' as t;
 @use '../../styles/mixins' as m;
 
 .card {
-  --tone: #{t.$line-strong}; // couleur de la formule, remplacée par la variante
+  // Couleurs de la formule, remplacées par la variante générée plus bas
+  --tone: #{t.$paper-deep};
+  --tone-text: #{t.$ink};
 
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: t.$space * 3;
   height: 100%;
-  padding: t.$space * 5 t.$space * 6;
-  border: 2px solid t.$line;
+  border: t.$border solid t.$ink;
   border-radius: t.$radius;
-  background: t.$surface;
-  color: t.$text;
+  background: t.$card;
+  color: t.$ink;
   cursor: pointer;
   transition:
-    border-color 0.2s,
-    background-color 0.2s;
+    transform 0.15s,
+    box-shadow 0.15s;
 
-  // Les deux encoches rondes du billet
+  // Les deux encoches rondes du billet, à la hauteur de la perforation
   &::before {
     @include m.notch(left);
   }
@@ -31,13 +32,14 @@
   }
 
   &:hover {
-    border-color: t.$line-strong;
+    @include m.poster-shadow;
+    transform: translate(-2px, -2px);
   }
 
-  // Sélectionné : la bordure prend la couleur de la formule
+  // Sélectionné : le billet « sort » de la page avec une grande ombre
   &:has(.input:checked) {
-    border-color: var(--tone);
-    background: t.$surface-raised;
+    @include m.poster-shadow(7px);
+    transform: translate(-3px, -3px);
   }
 
   // Le vrai bouton radio est invisible : le focus clavier se voit sur la carte entière
@@ -48,13 +50,16 @@
   &:has(.input:disabled) {
     cursor: not-allowed;
     opacity: 0.5;
+    transform: none;
+    box-shadow: none;
   }
 }
 
-// Boucle : .jour, .festival, .caves, chacune avec sa couleur
-@each $name, $color in t.$pass-tones {
+// Boucle : .jour, .festival, .caves, chacune avec son fond et sa couleur de texte
+@each $name, $tone in t.$pass-tones {
   .#{$name} {
-    --tone: #{$color};
+    --tone: #{map.get($tone, bg)};
+    --tone-text: #{map.get($tone, text)};
   }
 }
 
@@ -66,7 +71,18 @@
   opacity: 0;
 }
 
+// Le haut du billet prend la couleur de la formule
 .header {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space * 2;
+  padding: t.$space * 4 t.$space * 5;
+  background: var(--tone);
+  color: var(--tone-text);
+  border-bottom: t.$border dashed t.$ink;
+}
+
+.top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -74,83 +90,81 @@
 }
 
 .name {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-family: t.$display;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .price {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 800;
+  font-family: t.$display;
+  font-size: 2.75rem;
   line-height: 1;
-  color: var(--tone);
 }
 
 .unit {
-  margin-left: t.$space;
+  margin-left: t.$space * 1.5;
   font-size: 0.875rem;
-  font-weight: 500;
-  color: t.$muted;
+  font-weight: 600;
 }
 
-// Pastille cochée : un cercle vide qui se remplit à la sélection
+// Case cochée : un carré vide qui se remplit d'encre à la sélection
 .check {
-  $size: 1.5rem;
+  $size: 1.75rem;
 
   flex-shrink: 0;
   display: grid;
   place-items: center;
   width: $size;
   height: $size;
-  border: 2px solid t.$line-strong;
-  border-radius: 50%;
+  border: t.$border solid t.$ink;
+  background: t.$card;
 
   &::after {
     content: '';
-    width: $size * 0.5;
-    height: $size * 0.5;
-    border-radius: 50%;
-    background: var(--tone);
+    width: $size * 0.45;
+    height: $size * 0.45;
+    background: t.$ink;
     transform: scale(0);
     transition: transform 0.15s;
   }
 
   .card:has(.input:checked) & {
-    border-color: var(--tone);
-
     &::after {
       transform: scale(1);
     }
   }
 }
 
+// Étiquette « Le plus choisi », collée de travers comme un sticker
 .highlight {
-  align-self: flex-start;
-  padding: t.$space * 0.5 t.$space * 2.5;
-  border-radius: 999px;
-  background: var(--tone);
-  color: t.$page;
+  position: absolute;
+  top: t.$space * -4;
+  right: t.$space * 3;
+  z-index: 1;
+  padding: t.$space t.$space * 2.5;
+  border: 2px solid t.$ink;
+  background: t.$creme;
+  color: t.$ink;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 900;
+  text-transform: uppercase;
+  transform: rotate(4deg);
 }
 
-// Ligne pointillée de la perforation, à la hauteur des encoches
 .perks {
   display: flex;
   flex-direction: column;
   gap: t.$space * 1.5;
   margin: 0;
-  padding: t.$space * 3 0 0;
-  border-top: 2px dashed t.$line-strong;
+  padding: t.$space * 4 t.$space * 5 t.$space * 5;
   list-style: none;
   font-size: 0.875rem;
-  color: t.$muted;
+  font-weight: 500;
 
   li::before {
-    content: '✓';
+    content: '✶';
     margin-right: t.$space * 2;
-    color: var(--tone);
     font-weight: 700;
   }
 }
