@@ -1,0 +1,23 @@
+@use 'sass:math';
+@use 'tokens' as t;
+
+// Anneau de focus clavier, identique à l'utilitaire focus-ring de Tailwind
+@mixin focus-ring {
+  outline: 3px solid t.$focus;
+  outline-offset: 3px;
+}
+
+// Encoche ronde d'un billet : un cercle de la couleur du fond, à moitié hors de la carte.
+// $size en rem ; le décalage est calculé pour centrer l'encoche sur le bord.
+@mixin notch($side, $size: 1.5rem) {
+  content: '';
+  position: absolute;
+  top: 50%;
+  #{$side}: math.div($size, -2);
+  width: $size;
+  height: $size;
+  margin-top: math.div($size, -2);
+  border-radius: 50%;
+  background: var(--color-ink);
+  border: 1px solid t.$line;
+}

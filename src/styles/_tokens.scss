@@ -1,0 +1,21 @@
+// Partial SASS : relie les tokens Tailwind (@theme) aux variables SASS.
+// Aucune couleur en dur : on lit les variables CSS écrites par @theme.
+
+$radius: var(--radius-card);
+$line: var(--color-line);
+$line-strong: var(--color-line-strong);
+$surface: var(--color-surface);
+$surface-raised: var(--color-surface-raised);
+$text: var(--color-craie);
+$muted: var(--color-muted);
+$focus: var(--color-bulle-300);
+
+// Une couleur par formule de pass : la boucle @each du PassCard génère une variante par entrée
+$pass-tones: (
+  jour: var(--color-bulle-400),
+  festival: var(--color-corail-400),
+  caves: var(--color-genre-jazz),
+);
+
+// Espacements de base (multiples de 4 px, comme Tailwind)
+$space: 0.25rem;
