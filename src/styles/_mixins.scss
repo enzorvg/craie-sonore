@@ -5,6 +5,12 @@
 @mixin focus-ring {
   outline: 3px solid t.$focus;
   outline-offset: 3px;
+  box-shadow: 0 0 0 7px t.$focus-halo;
+}
+
+// Ombre portée « affiche » : un décalage franc, sans flou
+@mixin poster-shadow($offset: 4px) {
+  box-shadow: $offset $offset 0 t.$ink;
 }
 
 // Encoche ronde d'un billet : un cercle de la couleur du fond, à moitié hors de la carte.
@@ -13,11 +19,12 @@
   content: '';
   position: absolute;
   top: 50%;
-  #{$side}: math.div($size, -2);
+  // rem et px ne s'additionnent pas en SASS : calc() le fait dans le navigateur
+  #{$side}: calc(#{math.div($size, -2)} - #{math.div(t.$border, 2)});
   width: $size;
   height: $size;
   margin-top: math.div($size, -2);
   border-radius: 50%;
-  background: t.$page;
-  border: 1px solid t.$line;
+  background: t.$paper;
+  border: t.$border solid t.$ink;
 }

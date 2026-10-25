@@ -1,58 +1,63 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   Design tokens Craie Sonore : chaque variable crée des classes utilitaires.
-   Ambiance : nocturne, pétillant, brut.
-   Trois couleurs : noir de cave (ink), or champagne (bulle), corail (accent).
+   Design tokens Le Cabaret Bleu : chaque variable crée des classes utilitaires.
+   Ambiance : affiche de festival collée sur un mur. Deux familles seulement :
+   le bleu (du ciel pâle au bleu nuit) et la crème. Traits épais, ombres franches.
    « static » : les variables sont toujours écrites dans le CSS, même si aucune
    classe ne les utilise, car le module SASS du PassCard les lit avec var().
    ========================================================================== */
 @theme static {
-  /* --- Couleur principale : or champagne, en nuances ------------------- */
-  --color-bulle-200: oklch(0.94 0.06 95);
-  --color-bulle-300: oklch(0.9 0.1 92);
-  --color-bulle-400: oklch(0.85 0.14 88);
-  --color-bulle-500: oklch(0.78 0.15 80);
-  --color-bulle-600: oklch(0.66 0.14 72);
+  /* --- Le bleu, en nuances : du ciel pâle au bleu nuit ------------------ */
+  --color-bleu-100: oklch(0.94 0.03 250);
+  --color-bleu-200: oklch(0.87 0.07 245);
+  --color-bleu-300: oklch(0.78 0.12 240);
+  --color-bleu-400: oklch(0.64 0.19 255);
+  --color-bleu-500: oklch(0.53 0.24 265);
+  --color-bleu-600: oklch(0.46 0.26 268);             /* bg-bleu-600 : la couleur du festival */
+  --color-bleu-800: oklch(0.32 0.17 268);
 
-  /* --- Accent : corail ---------------------------------------------------- */
-  --color-corail-300: oklch(0.8 0.12 30);
-  --color-corail-400: oklch(0.72 0.17 28);
-  --color-corail-500: oklch(0.64 0.2 27);
+  /* --- La crème : fonds de page et accent clair sur les bleus ----------- */
+  --color-paper: oklch(0.96 0.022 88);                /* bg-paper : fond de page, papier d'affiche */
+  --color-paper-deep: oklch(0.92 0.035 86);           /* bg-paper-deep : survol, zones en retrait */
+  --color-card: oklch(0.99 0.008 88);                 /* bg-card : cartes et champs */
+  --color-creme: oklch(0.92 0.06 88);                 /* text-creme : titres sur fond bleu */
+  --color-ink: oklch(0.22 0.07 268);                  /* text-ink, border-ink : encre bleu nuit */
+  --color-muted: oklch(0.43 0.05 268);                /* text-muted : texte secondaire */
 
-  /* --- Fonds et textes : on nomme le rôle, pas la teinte ---------------- */
-  --color-ink: oklch(0.16 0.02 285);                  /* bg-ink : fond de page, noir de cave */
-  --color-surface: oklch(0.22 0.025 285);             /* bg-surface : cartes */
-  --color-surface-raised: oklch(0.28 0.03 285);       /* bg-surface-raised : survol, champs */
-  --color-line: oklch(1 0 0 / 0.12);                  /* border-line : séparateurs */
-  --color-line-strong: oklch(1 0 0 / 0.25);
-  --color-craie: oklch(0.96 0.012 90);                /* text-craie : texte principal */
-  --color-muted: oklch(0.78 0.02 285);                /* text-muted : texte secondaire */
+  /* --- Genres musicaux : une nuance de bleu ou de crème chacun --------- */
+  --color-genre-electro: var(--color-bleu-300);
+  --color-genre-rock: var(--color-bleu-800);
+  --color-genre-hiphop: var(--color-bleu-500);
+  --color-genre-pop: var(--color-bleu-200);
+  --color-genre-jazz: var(--color-creme);
 
-  /* --- Genres musicaux ------------------------------------------------- */
-  --color-genre-electro: oklch(0.8 0.13 210);
-  --color-genre-rock: var(--color-corail-400);
-  --color-genre-hiphop: var(--color-bulle-400);
-  --color-genre-pop: oklch(0.78 0.15 340);
-  --color-genre-jazz: oklch(0.8 0.14 160);
+  /* --- Tons de statut : seules couleurs hors palette, pour être compris */
+  --color-success: oklch(0.45 0.12 150);
+  --color-warning: oklch(0.45 0.11 60);
+  --color-danger: oklch(0.5 0.2 25);
 
-  /* --- Tons de statut ------------------------------------------------------ */
-  --color-success: oklch(0.8 0.17 150);
-  --color-warning: oklch(0.84 0.16 75);
-  --color-danger: oklch(0.72 0.18 22);
-
-  /* --- Typographie ------------------------------------------------------ */
-  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  /* --- Typographie : une police d'affiche condensée + une police de texte */
+  --font-display: "Anton", "Impact", ui-sans-serif, sans-serif;
+  --font-sans: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
 
   /* --- Rayons, ombres, animations ------------------------------------- */
-  --radius-card: 1.25rem;                              /* rounded-card */
-  --shadow-glow: 0 18px 45px -20px oklch(0.85 0.14 88 / 0.5); /* shadow-glow */
+  --radius-card: 0.25rem;                             /* rounded-card : coins presque vifs */
+  --shadow-poster: 4px 4px 0 var(--color-ink);        /* shadow-poster : ombre portée franche */
+  --shadow-poster-lg: 7px 7px 0 var(--color-ink);     /* shadow-poster-lg */
   --animate-fade-up: fade-up 0.4s ease-out both;      /* animate-fade-up */
+  --animate-marquee: marquee 28s linear infinite;     /* animate-marquee : bandeau défilant */
 
   @keyframes fade-up {
     from {
       opacity: 0;
       transform: translateY(0.75rem);
+    }
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
     }
   }
 }
@@ -70,6 +75,7 @@
     ::before,
     ::after {
       animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
   }
@@ -90,21 +96,35 @@
   }
 }
 
-/* Anneau de focus clavier commun à tous les éléments interactifs */
+/* Anneau de focus clavier commun à tous les éléments interactifs :
+   bleu nuit, doublé d'un halo bleu ciel pour rester visible sur fond bleu */
 @utility focus-ring {
   &:focus-visible {
-    outline: 3px solid var(--color-bulle-300);
+    outline: 3px solid var(--color-ink);
     outline-offset: 2px;
+    box-shadow: 0 0 0 6px var(--color-bleu-300);
   }
 }
 
-/* Petit sur-titre de section (ex. « Programmation ») */
+/* Petit sur-titre de section, façon tampon (ex. « Programmation ») */
 @utility eyebrow {
+  width: fit-content;
+  padding: --spacing(1) --spacing(2);
+  background: var(--color-ink);
+  color: var(--color-creme);
   font-size: var(--text-xs);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-black);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--color-bulle-300);
+}
+
+/* Titre d'affiche : police condensée en capitales, interlignage serré */
+@utility poster-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
 /* Rangées de filtres qui défilent au pouce, sans barre de défilement */
@@ -114,4 +134,14 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Soleil rayonnant façon affiche : rayons alternés de deux bleus.
+   La position du centre se règle avec --sun-at (ex. [--sun-at:80%_100%]). */
+@utility sunburst {
+  background: repeating-conic-gradient(
+    from 0deg at var(--sun-at, 50% 100%),
+    var(--color-bleu-600) 0deg 9deg,
+    var(--color-bleu-500) 9deg 18deg
+  );
 }

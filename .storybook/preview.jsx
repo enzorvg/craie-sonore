@@ -1,4 +1,5 @@
-import '@fontsource-variable/bricolage-grotesque'
+import '@fontsource/anton'
+import '@fontsource-variable/archivo'
 import '../src/style.css'
 
 /** @type { import('@storybook/react-vite').Preview } */
@@ -6,7 +7,7 @@ const preview = {
   // Chaque story est rendue sur le fond du site, avec la couleur de texte du site
   decorators: [
     (Story) => (
-      <div className="bg-ink p-6 text-craie">
+      <div className="bg-paper p-6 font-sans text-ink">
         <Story />
       </div>
     ),
