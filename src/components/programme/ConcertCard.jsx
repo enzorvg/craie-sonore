@@ -34,9 +34,9 @@ export default function ConcertCard({ concert, index = 0, isInPlanning, onToggle
               <BaseBadge tone="brand">Tête d&rsquo;affiche</BaseBadge>
             </span>
           )}
-          <h3 id={`concert-${concert.id}-title`} className="font-display text-xl/tight font-extrabold break-words">
+          <h2 id={`concert-${concert.id}-title`} className="font-display text-xl/tight font-extrabold break-words">
             {concert.artist}
-          </h3>
+          </h2>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <GenreBadge genre={concert.genre} />
             <span className="inline-flex items-center gap-1 text-sm text-muted">
