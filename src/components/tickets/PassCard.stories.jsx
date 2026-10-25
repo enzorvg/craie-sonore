@@ -2,6 +2,19 @@ import { useState } from 'react'
 import PassCard from './PassCard.jsx'
 import { PASSES } from '../../constants/festival.js'
 
+// Un vrai composant (nom en majuscule) pour pouvoir utiliser useState
+function PassGroup() {
+  const [value, setValue] = useState('festival')
+  return (
+    <fieldset className="grid gap-6 sm:grid-cols-3">
+      <legend className="mb-4 font-bold">Votre formule</legend>
+      {PASSES.map((pass) => (
+        <PassCard key={pass.id} pass={pass} checked={value === pass.id} onChange={setValue} />
+      ))}
+    </fieldset>
+  )
+}
+
 export default {
   title: 'Billetterie/PassCard (SASS)',
   component: PassCard,
@@ -25,15 +38,5 @@ export const Focus = {
 export const Group = {
   name: 'Choix entre les 3 formules',
   decorators: [(Story) => <div className="max-w-3xl px-4"><Story /></div>],
-  render: () => {
-    const [value, setValue] = useState('festival')
-    return (
-      <fieldset className="grid gap-6 sm:grid-cols-3">
-        <legend className="mb-4 font-bold">Votre formule</legend>
-        {PASSES.map((pass) => (
-          <PassCard key={pass.id} pass={pass} checked={value === pass.id} onChange={setValue} />
-        ))}
-      </fieldset>
-    )
-  },
+  render: () => <PassGroup />,
 }

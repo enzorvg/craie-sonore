@@ -2,6 +2,13 @@ import { useState } from 'react'
 import BaseChip from './BaseChip.jsx'
 import BaseChipGroup from './BaseChipGroup.jsx'
 
+// Un vrai composant (nom en majuscule) pour pouvoir utiliser useState
+function GenreGroup() {
+  const [value, setValue] = useState('Tous')
+  const options = ['Tous', 'Électro', 'Rock', 'Hip-hop', 'Pop', 'Jazz'].map((genre) => ({ value: genre, label: genre }))
+  return <BaseChipGroup id="story-genre" label="Genre" options={options} value={value} onChange={setValue} />
+}
+
 export default {
   title: 'Base/BaseChip',
   component: BaseChip,
@@ -29,9 +36,5 @@ export const Focus = {
 // Le groupe complet, interactif : un seul choix possible
 export const Group = {
   name: 'Groupe (BaseChipGroup)',
-  render: () => {
-    const [value, setValue] = useState('Tous')
-    const options = ['Tous', 'Électro', 'Rock', 'Hip-hop', 'Pop', 'Jazz'].map((genre) => ({ value: genre, label: genre }))
-    return <BaseChipGroup id="story-genre" label="Genre" options={options} value={value} onChange={setValue} />
-  },
+  render: () => <GenreGroup />,
 }
