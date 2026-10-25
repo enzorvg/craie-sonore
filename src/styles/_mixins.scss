@@ -9,7 +9,7 @@
 
 // Encoche ronde d'un billet : un cercle de la couleur du fond, à moitié hors de la carte.
 // $size en rem ; le décalage est calculé pour centrer l'encoche sur le bord.
-@mixin notch($side, $size: 1.5rem) {
+@mixin notch($side, $size: 1.25rem) {
   content: '';
   position: absolute;
   top: 50%;

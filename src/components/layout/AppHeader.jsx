@@ -3,6 +3,7 @@ import BaseButton from '../base/BaseButton.jsx'
 import { NAV_LINKS } from '../../constants/festival.js'
 
 // Desktop : navigation en haut. Mobile : seulement le logo, la navigation est dans MobileTabBar (zone du pouce).
+// Billetterie en bouton secondaire : l'appel à l'action principal reste celui de chaque écran.
 export default function AppHeader({ view, planningCount }) {
   const links = NAV_LINKS.filter((link) => link.view !== 'accueil' && link.view !== 'billetterie')
 
@@ -34,7 +35,7 @@ export default function AppHeader({ view, planningCount }) {
           </ul>
         </nav>
 
-        <BaseButton href="#billetterie" size="sm" variant={view === 'billetterie' ? 'secondary' : 'primary'}>
+        <BaseButton href="#billetterie" size="sm" variant="secondary" className="hidden md:inline-flex" aria-current={view === 'billetterie' ? 'page' : undefined}>
           Billetterie
         </BaseButton>
       </div>

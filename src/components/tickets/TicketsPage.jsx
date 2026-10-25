@@ -102,7 +102,7 @@ export default function TicketsPage() {
         <div className="flex flex-col gap-6">
           <fieldset className={fieldsetClass(errors.passId || errors.day)}>
             <legend className="px-2 font-display text-lg font-extrabold">1. Votre formule</legend>
-            <div className="grid gap-4 px-2 sm:grid-cols-3">
+            <div className="grid gap-6 px-2 sm:grid-cols-3">
               {PASSES.map((item) => (
                 <PassCard key={item.id} pass={item} checked={booking.passId === item.id} onChange={(value) => update('passId', value)} />
               ))}
