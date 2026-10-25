@@ -9,21 +9,21 @@ export default function BookingConfirmation({ order, onRestart }) {
   const pass = findPass(booking.passId)
 
   return (
-    <div role="status" className="mx-auto flex max-w-xl animate-fade-up flex-col items-center gap-5 rounded-card border border-success/40 bg-surface p-8 text-center">
-      <span className="grid size-14 place-items-center rounded-full bg-success/15 text-success">
+    <div role="status" className="mx-auto flex max-w-xl animate-fade-up flex-col items-center gap-5 rounded-card border-3 border-ink bg-card p-8 text-center shadow-poster-lg">
+      <span className="grid size-16 -rotate-6 place-items-center border-3 border-ink bg-creme text-ink shadow-poster">
         <Icon name="check" className="size-7" />
       </span>
-      <h1 tabIndex={-1} className="font-display text-3xl font-extrabold outline-none">
+      <h1 tabIndex={-1} className="poster-title text-5xl outline-none">
         C&rsquo;est réservé, {booking.name.trim().split(' ')[0]} !
       </h1>
-      <p className="text-muted">
+      <p className="font-medium text-muted">
         {pass.name}
         {pass.needsDay ? ` du ${dayLabel(booking.day).toLowerCase()}` : ''} pour {booking.adults + booking.youths} personne
-        {booking.adults + booking.youths > 1 ? 's' : ''}, soit <span className="font-bold text-craie">{formatPrice(computeTotal(booking))}</span>.
-        Les billets arrivent à <span className="font-bold text-craie break-all">{booking.email}</span>.
+        {booking.adults + booking.youths > 1 ? 's' : ''}, soit <span className="font-extrabold text-ink">{formatPrice(computeTotal(booking))}</span>.
+        Les billets arrivent à <span className="font-extrabold text-ink break-all">{booking.email}</span>.
       </p>
-      <p className="rounded-xl border border-dashed border-line-strong px-4 py-2 font-mono text-lg">
-        Commande <span className="font-bold text-bulle-300">{number}</span>
+      <p className="border-3 border-dashed border-ink px-4 py-2 font-mono text-lg">
+        Commande <span className="font-black text-bleu-600">{number}</span>
       </p>
       <div className="flex flex-col gap-3 sm:flex-row">
         <BaseButton href="#planning">Préparer mon planning</BaseButton>

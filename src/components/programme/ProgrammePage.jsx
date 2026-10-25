@@ -48,12 +48,12 @@ export default function ProgrammePage({ concerts, planning, onTogglePlanning }) 
       {visibleConcerts.length === 0 ? (
         <EmptyState title="Aucun concert ne correspond" action={<BaseButton onClick={resetFilters}>Réinitialiser les filtres</BaseButton>}>
           <p>
-            Filtres actifs : <span className="font-bold text-craie">{activeFilters.join(' + ')}</span>
+            Filtres actifs : <span className="font-extrabold text-ink">{activeFilters.join(' + ')}</span>
           </p>
           <p className="text-sm">Retirez un filtre ou repartez de la programmation complète.</p>
         </EmptyState>
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {visibleConcerts.map((concert, index) => (
             <li key={concert.id}>
               <ConcertCard

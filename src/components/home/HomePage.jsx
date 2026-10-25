@@ -1,91 +1,129 @@
 import BaseButton from '../base/BaseButton.jsx'
 import BaseCard from '../base/BaseCard.jsx'
-import Icon from '../base/Icon.jsx'
-import { GENRE_STYLES } from '../../constants/festival.js'
-import { dayLabel } from '../../utils/concerts.js'
+import { DAYS } from '../../constants/festival.js'
+import { compareByTime } from '../../utils/concerts.js'
 
-const stats = [
-  { label: 'Concerts', value: '16' },
-  { label: 'Scènes', value: '3' },
-  { label: 'Jours', value: '3' },
-]
+const MARQUEE = ['Le Cabaret Bleu', '9 · 10 · 11 juillet 2027', 'Reims', 'Parc de Champagne', '16 concerts', '3 scènes']
 
 const stages = [
-  { name: 'Grande Scène', text: 'En plein air, au cœur du parc. Les têtes d’affiche, chaque soir.' },
-  { name: 'Le Kiosque', text: 'La scène des découvertes et des DJ sets sous les arbres.' },
-  { name: 'Les Caves', text: '80 places à 20 m sous terre, dans les crayères. Jazz et acoustique.' },
+  { name: 'La Scène Bleue', text: 'En plein air, face à la pelouse. Les têtes d’affiche, chaque soir.', color: 'bg-bleu-600 text-card' },
+  { name: 'Le Chapiteau', text: 'Rock, rap et électro sous la toile, jusqu’à 2 h du matin.', color: 'bg-bleu-300 text-ink' },
+  { name: 'Les Caves', text: '80 places à 20 m sous terre, dans la craie. Jazz en petit comité.', color: 'bg-ink text-creme' },
 ]
 
-// Accueil : la proposition de valeur en une phrase, un seul appel à l'action principal
+// Bandeau défilant : décoratif (aria-hidden), le texte est déjà dans la page.
+// Le contenu est doublé pour que la boucle (translateX -50 %) ne montre aucun trou.
+function Marquee() {
+  return (
+    <div className="overflow-hidden border-b-3 border-ink bg-ink py-3 text-creme" aria-hidden="true">
+      <div className="flex w-max animate-marquee">
+        {[0, 1].map((copy) => (
+          <p key={copy} className="poster-title flex shrink-0 items-center text-2xl sm:text-3xl">
+            {MARQUEE.map((item) => (
+              <span key={item} className="flex items-center">
+                <span className="px-5">{item}</span>
+                <span className="text-bleu-300">✶</span>
+              </span>
+            ))}
+          </p>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Accueil : l'affiche du festival. Un seul appel à l'action principal : le pass.
 export default function HomePage({ concerts }) {
-  const headliners = concerts.filter((concert) => concert.headliner)
+  // Valeur dérivée : l'affiche jour par jour, la tête d'affiche d'abord puis les autres par horaire
+  const lineup = DAYS.map((day) => {
+    const ofDay = concerts.filter((concert) => concert.day === day.value).sort(compareByTime)
+    return { day, headliner: ofDay.find((concert) => concert.headliner), others: ofDay.filter((concert) => !concert.headliner) }
+  })
 
   return (
     <>
-      <section className="container-page grid items-center gap-10 py-12 md:py-20 lg:grid-cols-[1.2fr_1fr]">
-        <div className="flex flex-col gap-6">
-          <p className="inline-flex w-fit items-center gap-2 rounded-full border border-bulle-400/30 bg-bulle-400/10 px-3 py-1 text-sm font-semibold text-bulle-200">
-            <Icon name="pin" className="size-4" />
-            9, 10 et 11 juillet 2027 · Reims
-          </p>
-          <h1 tabIndex={-1} className="font-display text-4xl font-extrabold tracking-tight text-balance outline-none sm:text-6xl">
-            Trois nuits de musique,{' '}
-            <span className="text-bulle-400">du parc jusqu&rsquo;aux caves.</span>
+      <section className="relative overflow-hidden border-b-3 border-ink bg-bleu-600 text-card">
+        {/* Soleil rayonnant en fond, comme sur une affiche de festival (décoratif) */}
+        <div className="sunburst absolute inset-0 opacity-60 [--sun-at:85%_110%]" aria-hidden="true"></div>
+        <div className="absolute -right-24 -bottom-24 hidden size-80 rounded-full md:block border-3 border-ink bg-bleu-300 sm:size-[28rem]" aria-hidden="true"></div>
+        <div className="absolute -right-10 -bottom-10 hidden size-44 rounded-full md:block border-3 border-ink bg-creme sm:size-64" aria-hidden="true"></div>
+        <div className="container-page relative flex flex-col gap-8 py-12 md:py-20">
+          <p className="eyebrow">Reims · Parc de Champagne</p>
+          <h1 tabIndex={-1} className="poster-title text-[clamp(4.5rem,19vw,12rem)] outline-none">
+            <span className="block text-[0.32em] tracking-[0.2em]">Le</span>
+            Cabaret
+            <span className="block text-creme">Bleu</span>
           </h1>
-          <p className="max-w-xl text-lg text-muted">
-            16 concerts rock, électro, hip-hop, pop et jazz sur 3 scènes, dont une creusée dans la craie. Composez votre planning, puis
-            prenez votre pass.
+          <p className="poster-title text-3xl sm:text-5xl">9 · 10 · 11 juillet 2027</p>
+          <p className="max-w-xl text-lg font-medium">
+            Trois nuits, trois scènes, seize concerts : du rap sur la pelouse, du rock sous le chapiteau et du jazz au fond des
+            caves de craie.
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <BaseButton href="#billetterie" size="lg">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <BaseButton href="#billetterie" size="lg" variant="secondary">
               Prendre mon pass, dès 39 €
             </BaseButton>
-            <a href="#programmation" className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full px-4 font-semibold text-bulle-300 underline-offset-4 hover:underline">
+            <a href="#programmation" className="focus-ring inline-flex min-h-12 items-center justify-center px-2 font-extrabold tracking-wide uppercase underline decoration-3 underline-offset-6 hover:text-creme">
               Voir la programmation
             </a>
           </div>
-          <dl className="grid max-w-md grid-cols-3 gap-6 border-t border-line pt-6">
-            {stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col-reverse">
-                <dt className="text-sm text-muted">{stat.label}</dt>
-                <dd className="font-display text-3xl font-extrabold">{stat.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
 
-        <ul className="flex flex-col gap-3" aria-label="Têtes d'affiche">
-          {headliners.map((concert) => (
-            <li key={concert.id}>
-              <BaseCard className="flex-row items-center gap-4 p-4">
-                <span className={`w-1.5 self-stretch rounded-full ${GENRE_STYLES[concert.genre].bar}`} aria-hidden="true"></span>
-                <div className="flex flex-1 flex-col">
-                  <p className="text-xs font-bold tracking-wide text-muted uppercase">
-                    {dayLabel(concert.day)} · {concert.start}
-                  </p>
-                  <p className="font-display text-xl font-extrabold">{concert.artist}</p>
-                  <p className={`text-sm font-semibold ${GENRE_STYLES[concert.genre].text}`}>{concert.genre}</p>
-                </div>
-              </BaseCard>
-            </li>
-          ))}
-        </ul>
+          {/* Sticker collé de travers, comme sur une affiche */}
+          <p className="absolute top-10 right-6 hidden size-40 rotate-12 place-items-center rounded-full border-3 border-ink bg-creme text-center text-ink shadow-poster lg:grid">
+            <span className="poster-title text-3xl">
+              16 concerts
+              <span className="block text-lg">3 scènes</span>
+            </span>
+          </p>
+        </div>
       </section>
 
-      <section aria-labelledby="scenes-title" className="container-page flex flex-col gap-6 border-t border-line py-12">
-        <h2 id="scenes-title" className="font-display text-2xl font-extrabold">
-          Trois scènes, trois ambiances
+      <Marquee />
+
+      <section aria-labelledby="affiche-title" className="container-page flex flex-col gap-8 py-14">
+        <h2 id="affiche-title" className="poster-title text-5xl sm:text-6xl">
+          L&rsquo;affiche
         </h2>
-        <ul className="grid gap-4 md:grid-cols-3">
-          {stages.map((stage) => (
-            <li key={stage.name}>
-              <BaseCard className="h-full gap-2 p-5">
-                <h3 className="font-display text-lg font-bold text-bulle-300">{stage.name}</h3>
-                <p className="text-muted">{stage.text}</p>
+        <ol className="grid gap-6 md:grid-cols-3">
+          {lineup.map(({ day, headliner, others }) => (
+            <li key={day.value}>
+              <BaseCard tone="highlight" className="h-full gap-4 p-6 text-center">
+                <h3 className="eyebrow mx-auto">{day.long}</h3>
+                {headliner && <p className="poster-title text-5xl text-bleu-600 break-words">{headliner.artist}</p>}
+                {/* Chaque nom reste d'un bloc : il ne se coupe jamais au milieu */}
+                <ul className="poster-title flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-2xl/tight">
+                  {others.map((concert, index) => (
+                    <li key={concert.id} className="flex items-center gap-2">
+                      {index > 0 && <span className="text-bleu-400" aria-hidden="true">✶</span>}
+                      <span className="text-balance">{concert.artist}</span>
+                    </li>
+                  ))}
+                </ul>
               </BaseCard>
             </li>
           ))}
-        </ul>
+        </ol>
+        <BaseButton href="#programmation" variant="secondary" className="self-center">
+          Toute la programmation et les horaires
+        </BaseButton>
+      </section>
+
+      <section aria-labelledby="scenes-title" className="border-t-3 border-ink bg-paper-deep py-14">
+        <div className="container-page flex flex-col gap-8">
+          <h2 id="scenes-title" className="poster-title text-5xl sm:text-6xl">
+            Trois scènes
+          </h2>
+          <ul className="grid gap-6 md:grid-cols-3">
+            {stages.map((stage) => (
+              <li key={stage.name}>
+                <BaseCard className="h-full">
+                  <h3 className={`poster-title border-b-3 border-ink px-5 py-4 text-3xl ${stage.color}`}>{stage.name}</h3>
+                  <p className="p-5 font-medium">{stage.text}</p>
+                </BaseCard>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
     </>
   )

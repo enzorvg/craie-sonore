@@ -21,7 +21,7 @@ export const WithDot = {
   name: 'Avec pastille de couleur',
   render: (args) => (
     <BaseChip {...args}>
-      <span className="size-2.5 rounded-full bg-genre-electro" aria-hidden="true"></span>
+      <span className="size-3 border-2 border-ink bg-genre-electro" aria-hidden="true"></span>
       Électro
     </BaseChip>
   ),

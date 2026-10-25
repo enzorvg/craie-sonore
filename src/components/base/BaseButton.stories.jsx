@@ -18,7 +18,7 @@ export const Disabled = { args: { disabled: true, children: 'Réservation en cou
 export const AsLink = { name: 'Lien (href)', args: { href: '#billetterie', children: 'Billetterie' } }
 export const LongLabel = {
   name: 'Libellé très long',
-  args: { children: 'Ajouter Les Sept Collines Électriques du Nord-Est à mon planning du samedi' },
+  args: { children: 'Ajouter King Gizzard & The Lizard Wizard à mon planning du samedi' },
   decorators: [(Story) => <div className="max-w-xs"><Story /></div>],
 }
 // Focus clavier : la story place le focus sur le bouton pour montrer l'anneau

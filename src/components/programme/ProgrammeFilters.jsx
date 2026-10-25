@@ -5,7 +5,7 @@ import { ALL, DAYS, GENRES, GENRE_STYLES, SORTS } from '../../constants/festival
 import { plural } from '../../utils/concerts.js'
 
 const dayOptions = [{ value: ALL, label: 'Tous' }, ...DAYS.map((day) => ({ value: day.value, label: day.label }))]
-const genreOptions = [{ value: ALL, label: 'Tous' }, ...GENRES.map((genre) => ({ value: genre, label: genre, dot: GENRE_STYLES[genre].dot }))]
+const genreOptions = [{ value: ALL, label: 'Tous' }, ...GENRES.map((genre) => ({ value: genre, label: genre, swatch: GENRE_STYLES[genre].bg }))]
 
 // Les pastilles d'abord : sur mobile, jour et genre sont les filtres utiles en premier.
 // Composant de présentation : il reçoit les valeurs et prévient le parent par des callbacks
@@ -20,7 +20,7 @@ export default function ProgrammeFilters({ filters, onChange, count, hasActiveFi
           id="search"
           type="search"
           label="Rechercher un artiste, une scène, une ville"
-          placeholder="Ex. Ruban Noir, Caves, Lille…"
+          placeholder="Ex. Angèle, Caves, Toulouse…"
           value={filters.query}
           onChange={(event) => onChange('query', event.target.value)}
         />
@@ -33,10 +33,10 @@ export default function ProgrammeFilters({ filters, onChange, count, hasActiveFi
         </BaseField>
       </div>
 
-      <div className="flex min-h-11 items-center justify-between gap-3 border-t border-line pt-3">
+      <div className="flex min-h-11 items-center justify-between gap-3 border-t-3 border-ink pt-3">
         {/* aria-live : le nombre de résultats est annoncé à chaque changement de filtre */}
-        <p className="text-sm text-muted" aria-live="polite">
-          <span className="font-bold text-craie">{plural(count, 'concert')}</span>
+        <p className="text-sm font-medium" aria-live="polite">
+          <span className="poster-title text-2xl">{plural(count, 'concert')}</span>
           {count > 1 ? ' trouvés' : ' trouvé'}
         </p>
         {hasActiveFilters && (

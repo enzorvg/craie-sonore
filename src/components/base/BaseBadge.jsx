@@ -1,16 +1,16 @@
 // Étiquette d'information non interactive, déclinée en tons.
 // La couleur ne porte jamais seule le sens : le texte le dit aussi.
 const tones = {
-  neutral: 'border-line-strong bg-white/5 text-craie',
-  brand: 'border-bulle-400/50 bg-bulle-400/15 text-bulle-300',
-  success: 'border-success/40 bg-success/10 text-success',
-  warning: 'border-warning/40 bg-warning/10 text-warning',
-  danger: 'border-danger/40 bg-danger/10 text-danger',
+  neutral: 'bg-card text-ink',
+  brand: 'bg-creme text-ink',
+  success: 'bg-card text-success',
+  warning: 'bg-creme text-warning',
+  danger: 'bg-card text-danger',
 }
 
 export default function BaseBadge({ tone = 'neutral', children }) {
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-bold ${tones[tone]}`}>
+    <span className={`inline-flex items-center gap-1.5 border-2 border-ink px-2 py-0.5 text-xs font-extrabold tracking-wide uppercase ${tones[tone]}`}>
       {children}
     </span>
   )

@@ -27,7 +27,7 @@ export default function PlanningPage({ concerts, planning, onTogglePlanning }) {
       ) : (
         <>
           {conflicts.size > 0 && (
-            <p role="status" className="flex items-start gap-2 rounded-xl border border-warning/40 bg-warning/10 p-4 text-sm text-warning">
+            <p role="status" className="flex items-start gap-2 rounded-card border-3 border-ink bg-creme p-4 text-sm font-bold text-ink shadow-poster">
               <Icon name="alert" className="size-5 shrink-0" />
               {plural(conflicts.size, 'concert')} se chevauchent : vous devrez choisir entre eux.
             </p>
@@ -35,18 +35,18 @@ export default function PlanningPage({ concerts, planning, onTogglePlanning }) {
 
           {groups.map((group) => (
             <section key={group.day.value} aria-labelledby={`day-${group.day.value}`} className="flex flex-col gap-3">
-              <h2 id={`day-${group.day.value}`} className="font-display text-xl font-extrabold text-bulle-300">
+              <h2 id={`day-${group.day.value}`} className="eyebrow text-sm">
                 {group.day.long}
               </h2>
               <ol className="flex flex-col gap-2">
                 {group.concerts.map((concert) => (
-                  <li key={concert.id} className="flex items-center gap-4 rounded-xl border border-line bg-surface p-3 sm:p-4">
-                    <time dateTime={`${concert.date}T${concert.start}`} className="w-14 shrink-0 font-display text-lg font-extrabold">
+                  <li key={concert.id} className="flex items-center gap-4 rounded-card border-3 border-ink bg-card p-3 sm:p-4">
+                    <time dateTime={`${concert.date}T${concert.start}`} className="poster-title w-16 shrink-0 text-3xl text-bleu-600">
                       {concert.start}
                     </time>
                     <div className="flex min-w-0 flex-1 flex-col gap-1">
-                      <p className="font-bold break-words">{concert.artist}</p>
-                      <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+                      <p className="poster-title text-2xl break-words">{concert.artist}</p>
+                      <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-medium text-muted">
                         <GenreBadge genre={concert.genre} />
                         {concert.stage} · jusqu&rsquo;à {concert.end}
                       </p>
@@ -63,8 +63,8 @@ export default function PlanningPage({ concerts, planning, onTogglePlanning }) {
             </section>
           ))}
 
-          <div className="flex flex-col items-start gap-2 rounded-card border border-line p-5 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-muted">Votre programme est prêt ? Il ne manque que le pass.</p>
+          <div className="flex flex-col items-start gap-4 rounded-card border-3 border-ink bg-bleu-200 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <p className="poster-title text-2xl">Votre programme est prêt ? Il ne manque que le pass.</p>
             <BaseButton href="#billetterie">Prendre mon pass</BaseButton>
           </div>
         </>

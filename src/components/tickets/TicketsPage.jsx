@@ -16,7 +16,7 @@ const FIELD_LABELS = { passId: 'Formule', day: 'Jour', adults: 'Billets', name: 
 const FIELD_TARGETS = { passId: 'pass-jour', day: 'day', adults: 'adults-label', name: 'name', email: 'email', terms: 'terms' }
 
 function fieldsetClass(hasError) {
-  return `flex flex-col gap-4 rounded-card border p-5 ${hasError ? 'border-danger/60' : 'border-line'}`
+  return `flex flex-col gap-5 rounded-card border-3 bg-card p-5 ${hasError ? 'border-danger' : 'border-ink'}`
 }
 
 export default function TicketsPage() {
@@ -49,7 +49,7 @@ export default function TicketsPage() {
     // Pas de serveur : on simule l'envoi pour montrer l'état de chargement
     setStatus('sending')
     setTimeout(() => {
-      setOrder({ booking, number: `CS-${Date.now().toString(36).slice(-6).toUpperCase()}` })
+      setOrder({ booking, number: `CB-${Date.now().toString(36).slice(-6).toUpperCase()}` })
       setStatus('done')
       window.scrollTo(0, 0)
       requestAnimationFrame(() => document.querySelector('main h1')?.focus())
@@ -78,8 +78,8 @@ export default function TicketsPage() {
       </PageHeading>
 
       {errorKeys.length > 0 && (
-        <div ref={summaryRef} tabIndex={-1} role="alert" className="flex flex-col gap-2 rounded-xl border border-danger/60 bg-danger/10 p-4 outline-none focus-visible:ring-2 focus-visible:ring-danger">
-          <p className="flex items-center gap-2 font-bold text-danger">
+        <div ref={summaryRef} tabIndex={-1} role="alert" className="flex flex-col gap-2 rounded-card border-3 border-danger bg-card p-4 outline-none focus-visible:ring-4 focus-visible:ring-danger">
+          <p className="flex items-center gap-2 font-extrabold text-danger uppercase">
             <Icon name="alert" />
             {errorKeys.length > 1 ? `${errorKeys.length} points à corriger :` : '1 point à corriger :'}
           </p>
@@ -101,13 +101,13 @@ export default function TicketsPage() {
       <form noValidate onSubmit={handleSubmit} className="grid items-start gap-6 lg:grid-cols-[1fr_20rem]">
         <div className="flex flex-col gap-6">
           <fieldset className={fieldsetClass(errors.passId || errors.day)}>
-            <legend className="px-2 font-display text-lg font-extrabold">1. Votre formule</legend>
-            <div className="grid gap-6 px-2 sm:grid-cols-3">
+            <legend className="poster-title bg-ink px-3 py-1 text-xl text-creme">1. Votre formule</legend>
+            <div className="grid gap-6 px-2 pt-4 sm:grid-cols-3">
               {PASSES.map((item) => (
                 <PassCard key={item.id} pass={item} checked={booking.passId === item.id} onChange={(value) => update('passId', value)} />
               ))}
             </div>
-            {errors.passId && <p className="text-sm font-semibold text-danger">{errors.passId}</p>}
+            {errors.passId && <p className="text-sm font-bold text-danger">{errors.passId}</p>}
             {pass?.needsDay && (
               <BaseField as="select" id="day" label="Jour de votre pass" value={booking.day} error={errors.day} onChange={(event) => update('day', event.target.value)}>
                 <option value="">Choisir un jour</option>
@@ -121,17 +121,17 @@ export default function TicketsPage() {
           </fieldset>
 
           <fieldset className={fieldsetClass(errors.adults)}>
-            <legend className="px-2 font-display text-lg font-extrabold">2. Vos billets</legend>
+            <legend className="poster-title bg-ink px-3 py-1 text-xl text-creme">2. Vos billets</legend>
             <TicketCounter id="adults" label="Adultes" hint="18 ans et plus" value={booking.adults} max={MAX_TICKETS - booking.youths} onChange={(value) => update('adults', value)} />
             <TicketCounter id="youths" label="Jeunes" hint="12 à 17 ans, moitié prix" value={booking.youths} max={MAX_TICKETS - booking.adults} onChange={(value) => update('youths', value)} />
-            {errors.adults && <p className="text-sm font-semibold text-danger">{errors.adults}</p>}
+            {errors.adults && <p className="text-sm font-bold text-danger">{errors.adults}</p>}
             <CheckboxField id="shuttle" checked={booking.shuttle} onChange={(value) => update('shuttle', value)}>
               Ajouter la navette Reims centre ↔ festival ({SHUTTLE_PRICE} € aller-retour par personne)
             </CheckboxField>
           </fieldset>
 
           <fieldset className={fieldsetClass(errors.name || errors.email || errors.terms)}>
-            <legend className="px-2 font-display text-lg font-extrabold">3. Vos coordonnées</legend>
+            <legend className="poster-title bg-ink px-3 py-1 text-xl text-creme">3. Vos coordonnées</legend>
             <BaseField id="name" label="Nom et prénom" autoComplete="name" value={booking.name} error={errors.name} onChange={(event) => update('name', event.target.value)} />
             <BaseField
               id="email"

@@ -7,8 +7,8 @@ export default {
   argTypes: { tone: { control: 'inline-radio', options: ['default', 'highlight', 'muted'] } },
   render: (args) => (
     <BaseCard {...args} className="max-w-sm gap-2 p-5">
-      <h3 className="font-display text-lg font-bold text-bulle-300">Les Caves</h3>
-      <p className="text-muted">80 places à 20 m sous terre, dans les crayères.</p>
+      <h3 className="poster-title text-3xl text-bleu-600">Les Caves</h3>
+      <p className="font-medium">80 places à 20 m sous terre, dans la craie.</p>
     </BaseCard>
   ),
 }

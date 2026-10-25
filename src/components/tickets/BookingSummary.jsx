@@ -10,14 +10,14 @@ export default function BookingSummary({ booking, isSending }) {
   const tickets = booking.adults + booking.youths
 
   return (
-    <aside aria-labelledby="summary-title" className="flex flex-col gap-4 rounded-card border border-line bg-surface p-5 lg:sticky lg:top-20">
-      <h2 id="summary-title" className="font-display text-lg font-extrabold">
+    <aside aria-labelledby="summary-title" className="flex flex-col gap-4 rounded-card border-3 border-ink bg-card p-5 shadow-poster-lg lg:sticky lg:top-24">
+      <h2 id="summary-title" className="poster-title text-3xl">
         Récapitulatif
       </h2>
       {pass ? (
         <dl className="flex flex-col gap-2 text-sm">
           <div className="flex justify-between gap-4">
-            <dt className="text-muted">{pass.name}{pass.needsDay && booking.day ? `, ${dayLabel(booking.day)}` : ''}</dt>
+            <dt className="font-bold">{pass.name}{pass.needsDay && booking.day ? `, ${dayLabel(booking.day)}` : ''}</dt>
             <dd />
           </div>
           {booking.adults > 0 && (
@@ -42,9 +42,9 @@ export default function BookingSummary({ booking, isSending }) {
       ) : (
         <p className="text-sm text-muted">Choisissez une formule pour voir le prix.</p>
       )}
-      <p className="flex items-baseline justify-between border-t border-line pt-4">
-        <span className="font-semibold">Total</span>
-        <span className="font-display text-3xl font-extrabold text-bulle-300" aria-live="polite">
+      <p className="flex items-baseline justify-between border-t-3 border-ink pt-4">
+        <span className="font-extrabold uppercase">Total</span>
+        <span className="poster-title text-5xl text-bleu-600" aria-live="polite">
           {formatPrice(total)}
         </span>
       </p>

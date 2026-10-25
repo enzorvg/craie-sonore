@@ -10,12 +10,12 @@ export default function CheckboxField({ id, checked, onChange, error, children }
           onChange={(event) => onChange(event.target.checked)}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `${id}-error` : undefined}
-          className="focus-ring size-5 shrink-0 cursor-pointer accent-bulle-400"
+          className="focus-ring size-5 shrink-0 cursor-pointer accent-bleu-600"
         />
         <span>{children}</span>
       </label>
       {error && (
-        <p id={`${id}-error`} className="text-sm font-semibold text-danger">
+        <p id={`${id}-error`} className="text-sm font-bold text-danger">
           {error}
         </p>
       )}

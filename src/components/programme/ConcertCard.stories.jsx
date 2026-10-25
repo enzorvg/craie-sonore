@@ -2,8 +2,8 @@ import { useState } from 'react'
 import ConcertCard from './ConcertCard.jsx'
 import concerts from '../../data/concerts.json'
 
-const tessa = concerts.find((concert) => concert.artist === 'Tessa Volta')
-const longName = concerts.find((concert) => concert.artist.startsWith('Les Sept Collines'))
+const fontaines = concerts.find((concert) => concert.artist === 'Fontaines D.C.')
+const longName = concerts.find((concert) => concert.artist.startsWith('King Gizzard'))
 const headliner = concerts.find((concert) => concert.headliner)
 
 // Un vrai composant (nom en majuscule) pour pouvoir utiliser useState
@@ -15,7 +15,7 @@ function InteractiveCard(args) {
 export default {
   title: 'Programmation/ConcertCard',
   component: ConcertCard,
-  args: { concert: tessa, isInPlanning: false, onTogglePlanning: () => {}, onOpen: () => {} },
+  args: { concert: fontaines, isInPlanning: false, onTogglePlanning: () => {}, onOpen: () => {} },
   decorators: [(Story) => <div className="max-w-sm"><Story /></div>],
 }
 
