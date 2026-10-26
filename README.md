@@ -47,4 +47,5 @@ src/
 
 ## Mise en ligne
 
-Vercel ou Netlify : commande de build `npm run build`, dossier publié `dist`.
+En ligne sur GitHub Pages : https://enzorvg.github.io/craie-sonore/
+Le workflow `.github/workflows/deploy.yml` rebuild et redéploie le site à chaque push sur `main`.
