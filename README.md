@@ -22,10 +22,10 @@ Vite, React 19, Tailwind 4 (tokens dans `@theme`, `src/style.css`), `sass-embedd
 
 | Écran | Rôle |
 | --- | --- |
-| `#accueil` | affiche du festival, programmation jour par jour, CTA « Prendre mon pass » |
-| `#programmation` | écran interactif : filtres jour + genre combinables, recherche, tri, modale de détail, état vide |
+| `#accueil` | affiche du festival, programmation jour par jour, explorateur des 3 scènes (onglets, filtre par jour, cœur du planning), CTA « Prendre mon pass » |
+| `#programmation` | écran interactif : filtres jour + genre + scène combinables, recherche (artiste, genre, scène), tri, pagination (6 par page), modale de détail, état vide |
 | `#planning` | concerts choisis (cœur), groupés par jour, chevauchements signalés, état vide |
-| `#billetterie` | formulaire de réservation : validation, erreurs, chargement, confirmation |
+| `#billetterie` | formulaire de réservation : nom et prénom séparés, e-mail vérifié dès qu'on quitte le champ, erreurs, chargement, confirmation |
 
 ## Organisation
 
@@ -35,11 +35,11 @@ src/
 ├── styles/_tokens.scss       partial SASS : tokens Tailwind → variables SASS
 ├── styles/_mixins.scss       partial SASS : focus-ring, ombre d'affiche, encoche de billet
 ├── data/concerts.json        16 concerts
-├── constants/festival.js     jours, genres, tarifs, classes Tailwind écrites en entier
-├── utils/                    concerts.js (filtres, tri, chevauchements), booking.js (total, validation)
+├── constants/festival.js     jours, genres, scènes, tarifs, classes Tailwind écrites en entier
+├── utils/                    concerts.js (filtres, tri, pagination, chevauchements), booking.js (total, validation)
 ├── hooks/                    useHashView (écran courant), useStoredSet (planning en localStorage)
 └── components/
-    ├── base/                 BaseButton, BaseCard, BaseBadge, BaseChip(+Group), BaseField, Icon
+    ├── base/                 BaseButton, BaseCard, BaseBadge, BaseChip(+Group), BaseField, BasePagination, Icon
     ├── layout/               AppHeader, MobileTabBar, AppFooter, PageHeading, Logo
     ├── home/ programme/ planning/ tickets/ shared/
     └── tickets/PassCard.module.scss   le composant stylé en SASS (@use, mixins, calculs, @each sur une map de maps)

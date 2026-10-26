@@ -36,7 +36,7 @@ export default function App() {
       </a>
       <AppHeader view={view} planningCount={planning.size} />
       <main id="contenu">
-        {view === 'accueil' && <HomePage concerts={concerts} />}
+        {view === 'accueil' && <HomePage concerts={concerts} planning={planning} onTogglePlanning={togglePlanning} />}
         {view === 'programmation' && <ProgrammePage concerts={concerts} planning={planning} onTogglePlanning={togglePlanning} />}
         {view === 'planning' && <PlanningPage concerts={concerts} planning={planning} onTogglePlanning={togglePlanning} />}
         {view === 'billetterie' && <TicketsPage />}

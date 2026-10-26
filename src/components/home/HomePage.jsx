@@ -1,15 +1,10 @@
 import BaseButton from '../base/BaseButton.jsx'
 import BaseCard from '../base/BaseCard.jsx'
+import StageExplorer from './StageExplorer.jsx'
 import { DAYS } from '../../constants/festival.js'
 import { compareByTime } from '../../utils/concerts.js'
 
 const MARQUEE = ['Le Cabaret Bleu', '9 · 10 · 11 juillet 2027', 'Reims', 'Parc de Champagne', '16 concerts', '3 scènes']
-
-const stages = [
-  { name: 'La Scène Bleue', text: 'En plein air, face à la pelouse. Les têtes d’affiche, chaque soir.', color: 'bg-bleu-600 text-card' },
-  { name: 'Le Chapiteau', text: 'Rock, rap et électro sous la toile, jusqu’à 2 h du matin.', color: 'bg-bleu-300 text-ink' },
-  { name: 'Les Caves', text: '80 places à 20 m sous terre, dans la craie. Jazz en petit comité.', color: 'bg-ink text-creme' },
-]
 
 // Bandeau défilant : décoratif (aria-hidden), le texte est déjà dans la page.
 // Le contenu est doublé pour que la boucle (translateX -50 %) ne montre aucun trou.
@@ -33,7 +28,7 @@ function Marquee() {
 }
 
 // Accueil : l'affiche du festival. Un seul appel à l'action principal : le pass.
-export default function HomePage({ concerts }) {
+export default function HomePage({ concerts, planning, onTogglePlanning }) {
   // Valeur dérivée : l'affiche jour par jour, la tête d'affiche d'abord puis les autres par horaire
   const lineup = DAYS.map((day) => {
     const ofDay = concerts.filter((concert) => concert.day === day.value).sort(compareByTime)
@@ -113,16 +108,10 @@ export default function HomePage({ concerts }) {
           <h2 id="scenes-title" className="poster-title text-5xl sm:text-6xl">
             Trois scènes
           </h2>
-          <ul className="grid gap-6 md:grid-cols-3">
-            {stages.map((stage) => (
-              <li key={stage.name}>
-                <BaseCard className="h-full">
-                  <h3 className={`poster-title border-b-3 border-ink px-5 py-4 text-3xl ${stage.color}`}>{stage.name}</h3>
-                  <p className="p-5 font-medium">{stage.text}</p>
-                </BaseCard>
-              </li>
-            ))}
-          </ul>
+          <p className="max-w-2xl font-medium">
+            Choisissez une scène pour voir qui y joue, jour par jour. Le cœur ajoute un concert à votre planning.
+          </p>
+          <StageExplorer concerts={concerts} planning={planning} onTogglePlanning={onTogglePlanning} />
         </div>
       </section>
     </>
