@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 const DEFAULT_VIEW = 'accueil'
 
 function readView(views) {
-  const hash = window.location.hash.slice(1)
+  // « #programmation?scene=caves » : la vue est avant le « ? », les paramètres sont lus par l'écran
+  const hash = window.location.hash.slice(1).split('?')[0]
   return views.includes(hash) ? hash : DEFAULT_VIEW
 }
 

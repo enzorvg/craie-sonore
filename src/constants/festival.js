@@ -12,6 +12,40 @@ export const DAYS = [
 
 export const GENRES = ['Électro', 'Rock', 'Hip-hop', 'Pop', 'Jazz']
 
+// Les 3 scènes. id : utilisé dans l'URL (#programmation?scene=caves) ; name : la valeur des données
+export const STAGES = [
+  {
+    id: 'scene-bleue',
+    name: 'La Scène Bleue',
+    short: 'Scène Bleue',
+    text: 'En plein air, face à la pelouse. Les têtes d’affiche, chaque soir.',
+    place: 'Grande pelouse du parc',
+    capacity: '12 000 personnes',
+    color: 'bg-bleu-600 text-card',
+  },
+  {
+    id: 'chapiteau',
+    name: 'Le Chapiteau',
+    short: 'Chapiteau',
+    text: 'Rock, rap et électro sous la toile, jusqu’à 2 h du matin.',
+    place: 'Sous la toile, côté bois',
+    capacity: '3 000 personnes',
+    color: 'bg-bleu-300 text-ink',
+  },
+  {
+    id: 'caves',
+    name: 'Les Caves',
+    short: 'Caves',
+    text: '80 places à 20 m sous terre, dans la craie. Jazz en petit comité.',
+    place: '20 m sous terre, dans la craie',
+    capacity: '80 places assises',
+    color: 'bg-ink text-creme',
+  },
+]
+
+// Nombre de concerts par page dans la programmation
+export const PAGE_SIZE = 6
+
 export const SORTS = [
   { value: 'time', label: 'Par horaire' },
   { value: 'name', label: 'Par artiste (A → Z)' },

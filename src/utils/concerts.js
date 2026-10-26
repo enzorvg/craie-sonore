@@ -24,18 +24,30 @@ export function compareByName(a, b) {
   return a.artist.localeCompare(b.artist, 'fr')
 }
 
-// Filtres combinables : jour + genre + recherche, puis tri
-export function filterConcerts(concerts, { day, genre, query, sort }) {
+// Filtres combinables : jour + genre + scène + recherche, puis tri
+export function filterConcerts(concerts, { day, genre, stage, query, sort }) {
   const needle = normalize(query)
 
   const visible = concerts.filter((concert) => {
     const matchesDay = day === ALL || concert.day === day
     const matchesGenre = genre === ALL || concert.genre === genre
-    const haystack = normalize([concert.artist, concert.genre, concert.stage, concert.origin].join(' '))
-    return matchesDay && matchesGenre && haystack.includes(needle)
+    const matchesStage = stage === ALL || concert.stage === stage
+    // On cherche un artiste, un genre ou une scène (pas la ville d'origine)
+    const haystack = normalize([concert.artist, concert.genre, concert.stage].join(' '))
+    return matchesDay && matchesGenre && matchesStage && haystack.includes(needle)
   })
 
   return visible.sort(sort === 'name' ? compareByName : compareByTime)
+}
+
+// Nombre de pages (au moins 1, même sans résultat)
+export function pageCount(total, size) {
+  return Math.max(1, Math.ceil(total / size))
+}
+
+// Les éléments de la page demandée (pages numérotées à partir de 1)
+export function paginate(items, page, size) {
+  return items.slice((page - 1) * size, page * size)
 }
 
 // Deux concerts du même jour se chevauchent si l'un commence avant la fin de l'autre
