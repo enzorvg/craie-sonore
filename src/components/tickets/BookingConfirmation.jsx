@@ -14,7 +14,7 @@ export default function BookingConfirmation({ order, onRestart }) {
         <Icon name="check" className="size-7" />
       </span>
       <h1 tabIndex={-1} className="poster-title text-5xl outline-none">
-        C&rsquo;est réservé, {booking.name.trim().split(' ')[0]} !
+        C&rsquo;est réservé, {booking.firstName.trim()} !
       </h1>
       <p className="font-medium text-muted">
         {pass.name}
